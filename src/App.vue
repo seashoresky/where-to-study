@@ -2,6 +2,7 @@
   <div v-show="hintFlag" class = "big-background" @click="hideHint">
     <div class = "big-hint">
       <div class = "big-title">本程序纯粹随机产生</div>
+      <div class = "big-info">西、南、北区开发中……</div>
       <div class = "big-info">如有其他地点未收录</div>
       <div class = "big-info">欢迎留言 求是潮公众号 后台</div>
     </div>
@@ -62,8 +63,15 @@
     </div>
     <div class="container">
       <div class = "hint" @click="showHint">
-        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M13 0.5C6.1 0.5 0.5 6.1 0.5 13C0.5 19.9 6.1 25.5 13 25.5C19.9 25.5 25.5 19.9 25.5 13C25.5 6.1 19.9 0.5 13 0.5ZM14.25 21.75H11.75V19.25H14.25V21.75ZM16.8375 12.0625L15.7125 13.2125C14.8125 14.125 14.25 14.875 14.25 16.75H11.75V16.125C11.75 14.75 12.3125 13.5 13.2125 12.5875L14.7625 11.0125C15.225 10.5625 15.5 9.9375 15.5 9.25C15.5 7.875 14.375 6.75 13 6.75C11.625 6.75 10.5 7.875 10.5 9.25H8C8 6.4875 10.2375 4.25 13 4.25C15.7625 4.25 18 6.4875 18 9.25C18 10.35 17.55 11.35 16.8375 12.0625Z" fill="#ECECEC"/>
+        <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g clip-path="url(#clip0_14_105)">
+            <path d="M15 2.5C8.1 2.5 2.5 8.1 2.5 15C2.5 21.9 8.1 27.5 15 27.5C21.9 27.5 27.5 21.9 27.5 15C27.5 8.1 21.9 2.5 15 2.5ZM16.25 23.75H13.75V21.25H16.25V23.75ZM18.8375 14.0625L17.7125 15.2125C16.8125 16.125 16.25 16.875 16.25 18.75H13.75V18.125C13.75 16.75 14.3125 15.5 15.2125 14.5875L16.7625 13.0125C17.225 12.5625 17.5 11.9375 17.5 11.25C17.5 9.875 16.375 8.75 15 8.75C13.625 8.75 12.5 9.875 12.5 11.25H10C10 8.4875 12.2375 6.25 15 6.25C17.7625 6.25 20 8.4875 20 11.25C20 12.35 19.55 13.35 18.8375 14.0625Z" fill="black"/>
+          </g>
+          <defs>
+            <clipPath id="clip0_14_105">
+              <rect width="30" height="30" fill="white"/>
+            </clipPath>
+          </defs>
         </svg>
       </div>
       <div class="caption">今天去🚀</div>
@@ -122,9 +130,9 @@ export default {
             ],
             azimuths: [
                 { text: "东", class: "picker-on"},
-                { text: "西（待收集）", class: "picker-off"},
-                { text: "南（待收集）", class: "picker-off"},
-                { text: "北（待收集）", class: "picker-off"}
+                { text: "西", class: "picker-disabled"},
+                { text: "南", class: "picker-disabled"},
+                { text: "北", class: "picker-disabled"}
             ],
             atmospheres: [
               { text: "幽静偏僻", class: "picker-on" },
@@ -278,7 +286,7 @@ export default {
   display: flex;
   flex-direction: row;
   text-align: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: flex-start;
   flex-flow: wrap;
 }
@@ -306,6 +314,24 @@ export default {
   align-items: flex-start;
   padding: 5px 15px;
   background: #FCFCFC;
+  border-radius: 20px;
+  flex: none;
+  order: 0;
+  flex-grow: 0;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 23px;
+  color: #C5C5C5;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+.picker-disabled{
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  padding: 5px 15px;
+  background: #f5f5f5;
   border-radius: 20px;
   flex: none;
   order: 0;
@@ -354,7 +380,7 @@ export default {
 .hint{
   position: absolute;
   right: 20px;
-  top: 330px;
+  bottom: 475px;
 }
 .pick {
   border-radius: 6px;
