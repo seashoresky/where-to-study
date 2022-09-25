@@ -1,4 +1,11 @@
 <template>
+  <div v-show="hintFlag" class = "big-background" @click="hideHint">
+    <div class = "big-hint">
+      <div class = "big-title">本程序纯粹随机产生</div>
+      <div class = "big-info">如有其他地点未收录</div>
+      <div class = "big-info">欢迎留言 求是潮公众号 后台</div>
+    </div>
+  </div>
   <div class="background">
     <div class="top-bar">
       <div class="title">今天去哪学📚</div>
@@ -54,6 +61,11 @@
       </div>
     </div>
     <div class="container">
+      <div class = "hint" @click="showHint">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M13 0.5C6.1 0.5 0.5 6.1 0.5 13C0.5 19.9 6.1 25.5 13 25.5C19.9 25.5 25.5 19.9 25.5 13C25.5 6.1 19.9 0.5 13 0.5ZM14.25 21.75H11.75V19.25H14.25V21.75ZM16.8375 12.0625L15.7125 13.2125C14.8125 14.125 14.25 14.875 14.25 16.75H11.75V16.125C11.75 14.75 12.3125 13.5 13.2125 12.5875L14.7625 11.0125C15.225 10.5625 15.5 9.9375 15.5 9.25C15.5 7.875 14.375 6.75 13 6.75C11.625 6.75 10.5 7.875 10.5 9.25H8C8 6.4875 10.2375 4.25 13 4.25C15.7625 4.25 18 6.4875 18 9.25C18 10.35 17.55 11.35 16.8375 12.0625Z" fill="#ECECEC"/>
+        </svg>
+      </div>
       <div class="caption">今天去🚀</div>
       <div class="pick">
         <div class="position">{{position}}</div>
@@ -62,6 +74,7 @@
       </div>
       <button class="button" @click="getPosition()">开roll！</button>
     </div>
+    <div class = "power">Powered by 求是潮 2022</div>
   </div>
 </template>
 
@@ -89,6 +102,7 @@ export default {
             ],
             map: 0,
             atom: 0,
+            hintFlag: false,
         };
     },
     methods: {
@@ -108,6 +122,12 @@ export default {
           for(let i = 0; i < 4; i++) this.atmospheres[i].class = "picker-off";
           this.atmospheres[index].class = "picker-on";
           this.atom = index;
+        },
+        showHint(){
+          this.hintFlag = true;
+        },
+        hideHint(){
+          this.hintFlag = false;
         }
     },
 }
@@ -116,6 +136,48 @@ export default {
 <style scoped>
 * {
   font-family: "Noto Sans SC";
+}
+.big-background{
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.25);
+  padding: 20px;
+  height: 100%;
+  width: 100%;
+  z-index: 100;
+}
+.big-hint{
+  background-color: #ffffff;
+	box-shadow: 0px 0px 50px rgba(43, 48, 139, 0.05);
+  border-radius: 20px;
+  padding: 50px;
+}
+.big-title{
+	font-weight: 500;
+	font-size: 22px;
+	line-height: 24px;
+	margin-bottom: 30px;
+	display: flex;
+	text-align: center;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 50px;
+}
+.big-info{
+	display: flex;
+	flex-direction: row;
+	font-weight: 500;
+	font-size: 13px;
+	line-height: 24px;
+	color: #545464;
+	margin-top: 10upx;
+  text-align: center;
+	justify-content: center;
+	align-items: center;
 }
 .background {
   position: relative;
@@ -247,6 +309,11 @@ export default {
   flex-direction: column;
   width: 100%;
 }
+.hint{
+  position: absolute;
+  right: 20px;
+  top: 330px;
+}
 .pick {
   border-radius: 6px;
   box-shadow: 0px 3px 5px 0px rgba(0, 0, 0, 0.05);
@@ -294,5 +361,18 @@ export default {
   background: #000000;
   color: #FFFFFF;
   border: none;
+}
+.power{
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 17px;
+  color: #C0C0C0;
+  margin-top: 20px;
+  width: 100%;
 }
 </style>
