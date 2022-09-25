@@ -72,7 +72,8 @@
         <div class="icon">{{icon}}</div>
         <div class="description">{{description}}</div>
       </div>
-      <button class="button" @click="getPosition()">开roll！</button>
+      <button v-show="!rollFlag" class="button-on" @click="getPosition()">开roll</button>
+      <button v-show="rollFlag" class="button-off" @click="stopGetPosition()">停停停</button>
     </div>
     <div class = "power">Powered by 求是潮 2022</div>
   </div>
@@ -82,17 +83,48 @@
 export default {
     data() {
         return {
-            position: "NULL",
-            description: "none",
+            position: "没想法",
+            description: "来，试试看",
             icon: "❓",
-            positions: ["东教", "西教", "北教", "启真湖底", "管院楼顶", "小剧场b217"],
-            icons: ["🏫", "💑", "🧑‍🎓", "🤿", "🏢", "🎭"],
-            descriptions: ["经典永不过时", "幸运的人不会遇到情侣", "误入老狗们的世界", "咕噜咕噜", "一跃解……", "凭此截图获取一天潮人体验券"],
+            positionsEast: [
+              [
+                {position: "启真湖畔", icon: "🚶🏻", description: "边走边学，强身健体"},
+                {position: "寝室", icon: "👨‍👨‍👦‍👦", description: "也许偏僻，有时幽静"},
+                {position: "安中大楼", icon: "🏙", description: "许多小组作业的诞生地"},
+                {position: "机房", icon: "🖥", description: "cout<<“今天来这学”"},
+              ],
+              [
+                {position: "教超", icon: "🧊", description: "来点冰可乐"},
+                {position: "瑞幸", icon: "☕️", description: "来点冰咖啡"},
+                {position: "全家", icon: "🍙", description: "来点热饭团"},
+                {position: "毕至居", icon: "🍲", description: "要在这里学？红豆泥"},
+                {position: "大草坪", icon: "🌿", description: "小孩：有；蚊子：多"},
+                {position: "小剧场讨论区", icon: "💡", description: "旁听例会的不二之选"},
+                {position: "东二麦斯威", icon: "🥣", description: "葱油面香香"},
+              ],
+              [
+                {position: "东教教室", icon: "🏫", description: "经典永不过时"},
+                {position: "东教长廊", icon: "🎵", description: "能读出声，太好了"},
+                {position: "西教教室", icon: "💑", description: "幸运的人不会遇到情侣"},
+                {position: "西教自习区", icon: "✏️", description: "累了还能看看墙上的字"},
+                {position: "基图", icon: "📖", description: "记得预约"},
+              ],
+              [
+                {position: "风雨操场", icon: "🏐", description: "顺便打个卡（啊？"},
+                {position: "西操", icon: "⚽️", description: "小心足球"},
+                {position: "东操", icon: "🏃🏻‍♀️", description: "12min跑还有多久？"},
+                {position: "大食堂", icon: "🍱", description: "您吃了吗"},
+                {position: "菜鸟驿站", icon: "📦", description: "拿到新书太兴奋"},
+                {position: "管院楼顶", icon: "🏢", description: "一跃解……"},
+                {position: "启真湖底", icon: "🤿", description: "咕噜咕噜"},
+                {position: "小剧场b217", icon: "🎬", description: "凭此截图获取一天潮人体验券"},
+              ]
+            ],
             azimuths: [
                 { text: "东", class: "picker-on"},
-                { text: "西", class: "picker-off"},
-                { text: "南", class: "picker-off"},
-                { text: "北", class: "picker-off"}
+                { text: "西（待收集）", class: "picker-off"},
+                { text: "南（待收集）", class: "picker-off"},
+                { text: "北（待收集）", class: "picker-off"}
             ],
             atmospheres: [
               { text: "幽静偏僻", class: "picker-on" },
@@ -101,19 +133,29 @@ export default {
               { text: "另辟蹊径", class: "picker-off" },
             ],
             map: 0,
-            atom: 0,
+            atmo: 0,
             hintFlag: false,
+            time: null,
+            rollFlag: false,
         };
     },
     methods: {
         getPosition() {
-          const total = this.positions.length;
-          let i = Math.floor(Math.random() * total);
-          this.position = this.positions[i];
-          this.description = this.descriptions[i];
-          this.icon = this.icons[i];
+          this.rollFlag = true;
+          const total = this.positionsEast[this.atmo].length;
+          this.time = setInterval(() => {
+            let i = Math.floor(Math.random() * total);
+            this.position = this.positionsEast[this.atmo][i].position;
+            this.description = this.positionsEast[this.atmo][i].description;
+            this.icon = this.positionsEast[this.atmo][i].icon;
+          }, 50)
+        },
+        stopGetPosition(){
+          clearInterval(this.time);
+          this.rollFlag = false;
         },
         chooseAzimuth(index){
+          return;
           for(let i = 0; i < 4; i++) this.azimuths[i].class = "picker-off";
           this.azimuths[index].class = "picker-on";
           this.map = index;
@@ -121,7 +163,7 @@ export default {
         chooseAtmosphere(index){
           for(let i = 0; i < 4; i++) this.atmospheres[i].class = "picker-off";
           this.atmospheres[index].class = "picker-on";
-          this.atom = index;
+          this.atmo = index;
         },
         showHint(){
           this.hintFlag = true;
@@ -347,7 +389,7 @@ export default {
   font-size: 18px;
   line-height: 24px;
 }
-.button {
+.button-on {
   padding: 15px 50px;
   display: flex;
   flex-direction: row;
@@ -360,6 +402,21 @@ export default {
   border-radius: 82px;
   background: #000000;
   color: #FFFFFF;
+  border: none;
+}
+.button-off {
+  padding: 15px 50px;
+  display: flex;
+  flex-direction: row;
+  font-weight: 500;
+  font-size: 22px;
+  line-height: 28px;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  border-radius: 82px;
+  background: #ffffff;
+  color: #000000;
   border: none;
 }
 .power{
