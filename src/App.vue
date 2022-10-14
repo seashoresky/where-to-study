@@ -141,7 +141,7 @@ export default {
               { text: "另辟蹊径", class: "picker-off" },
             ],
             map: 0,
-            atmo: 0,
+            selectedAtmo: [0],
             hintFlag: false,
             time: null,
             rollFlag: false,
@@ -169,9 +169,25 @@ export default {
           this.map = index;
         },
         chooseAtmosphere(index){
-          for(let i = 0; i < 4; i++) this.atmospheres[i].class = "picker-off";
-          this.atmospheres[index].class = "picker-on";
-          this.atmo = index;
+          // 首先判断当前点击的按钮是否已经在被选中的atmo之中
+          if(this.selectedAtmo.includes(index)) {
+            // 如果已经被选中，就把它从选中的atmo之中删去
+            this.selectedAtmo = this.selectedAtmo.filter(item => {
+              return item != index
+            })
+          } else {
+            // 如果当前点击的按钮尚未在被选中的atmo之中，就把它加进被选中的列表
+            this.selectedAtmo.push(index)
+          }
+          // console.log(this.selectedAtmo)
+          // 遍历序号，选中的picker-on, 未选中的设为picker-off
+          for(let i = 0; i < 4; i++) {
+            if(this.selectedAtmo.includes(i)) {
+                this.atmospheres[i].class = "picker-on"
+            } else {
+              this.atmospheres[i].class = "picker-off"
+            }
+          }
         },
         showHint(){
           this.hintFlag = true;
